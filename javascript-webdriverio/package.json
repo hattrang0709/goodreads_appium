@@ -1,0 +1,28 @@
+{
+  "name": "goodreads_test",
+  "version": "1.0.0",
+  "description": "Goodreads tests using webdriverio",
+  "main": "index.js",
+  "dependencies": {
+    "lodash-cli": "4.17.5"
+    },
+  "scripts": {
+    "test": "mocha test/basic",
+    "clean": "rm -rf node_modules && rm -f package-lock.json && npm install",
+    "androiddddd": "mocha test/basic/android-create-session.test.js",
+    "iOSSSSSSS": "mocha test/basic/ios-create-web-session.test.js"
+  },
+  "mocha": {
+    "timeout": "1800000"
+  },
+  "author": "Trang Ha",
+  "license": "Apache-2.0",
+  "devDependencies": {
+    "assert": "^2.0.0",
+    "chai": "^4.1.2",
+    "mocha": "^8.0.1",
+    "chromedriver": "^86.0.0",
+    "webdriverio": "^7.2.0",
+    "wdio-chromedriver-service": "^6.0.4"
+  }
+}
