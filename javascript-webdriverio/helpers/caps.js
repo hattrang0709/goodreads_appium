@@ -3,7 +3,7 @@ const iosCaps = {
   automationName: 'XCUITest',
   deviceName: process.env.IOS_DEVICE_NAME || 'iphone11promax',
   platformVersion: process.env.IOS_PLATFORM_VERSION || '15.4',
-  app: undefined // Will be added in tests
+  app: undefined 
 };
 
 const iosWebCaps = {
@@ -14,8 +14,6 @@ const iosWebCaps = {
   browserName: 'Safari'
 };
 
-// Leave the Android platformVersion blank and set deviceName to a random string (Android deviceName is ignored by Appium but is still required)
-// If we're using SauceLabs, set the Android deviceName and platformVersion to the latest supported SauceLabs device and version
 const DEFAULT_ANDROID_DEVICE_NAME = process.env.SAUCE ||'emulator-5554';
 const DEFAULT_ANDROID_PLATFORM_VERSION = process.env.SAUCE || '11' ;
 

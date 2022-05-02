@@ -14,17 +14,6 @@ describe('Create Android session', function () {
     driver = await webdriverio.remote(androidOptions);
   });
 
-  it('should create and destroy a session', async function () {
-    // const res = await driver.status();
-    // assert.isObject(res.build);
-
-    const current_package = await driver.getCurrentPackage();
-    assert.equal(current_package, 'io.appium.android.apis');
-
-    const delete_session = await driver.deleteSession();
-    assert.isNull(delete_session);
-  });
-
   it('TC001-Log in', async function () {
     // click "Log in" link
     const lnk_login = await driver.$('//android.widget.TextView[@resource-id="com.goodreads:id/sign_in_button"]');
@@ -45,7 +34,7 @@ describe('Create Android session', function () {
     await logo.waitForDisplayed({ reverse: true });
     const txt_welcome = await driver.$('//android.widget.TextView[@resource-id="com.goodreads:id/title"]')
     await txt_welcome.waitForDisplayed({timeout: 4000, reverse: true});
-    await browser.pause(3000);
+    await txt_welcome.waitForExist({ timeout: 5000 })
     const mgs_welcome = await txt_welcome.getText();
     assert.strictEqual(mgs_welcome, 'Get started with Goodreads');
 
@@ -63,20 +52,6 @@ describe('Create Android session', function () {
     const btn_want_to_read = await driver.$("//android.widget.TextView[@resource-id='com.goodreads:id/wtr_unshelvedStatus']");
     await btn_want_to_read.waitForDisplayed();
 
-    //check returned result
-    // const lbl_info_book = await driver.$('android.widget.FrameLayout[@resource-id="com.goodreads:id/list_item_book"]');
-    // await lbl_info_book.waitForDisplayed();
-    // await lbl_info_book.click();
-    // // let result = true
-    // // await array_result.waitForDisplayed({ reverse: true })
-    // // const lbl_title_book = await driver.$('//android.widget.TextView[@resource-id="com.goodreads:id/book_title"]');
-    // // const lbl_title_book = await driver.$('//android.widget.TextView[@content-desc="The Clearing, link"]');
-    // // const lbl_info_book = await driver.$$('//android.widget.FrameLayout[@resource-id="com.goodreads:id/book_cover"]');
-    // const info_book =  await driver.$('android.widget.FrameLayout[@resource-id="com.goodreads:id/list_item_book"]').getProperty('content-desc');
-    // if(info_book.equal('JJJJJ')){
-    //   let result = true;
-    // }
-
     await driver.touchAction({
       action: 'tap',
       x: 182,
@@ -91,7 +66,7 @@ describe('Create Android session', function () {
     const author_book = await lbl_author_book.getText()
 
     let result = false;
-    if(title_book.indexOf("JJJJJ")>=0 || author_book.indexOf("JJJJJ")>=0){
+    if(title_book.includes("JJJJJ")==true|| author_book.includes("JJJJJ")==true){
       result = true; 
     }
     assert.strictEqual(result, true);
@@ -108,21 +83,22 @@ describe('Create Android session', function () {
     const temp = await btn_wanToRead_checked.getAttribute('content-desc');
 
     let result = false;
-    if(temp.indexOf("selected")>=0){
+    if(temp.includes("selected")==true){
       result = true;
     }
 
     assert.strictEqual(result, true);
 
-    // remove this book in My book tab
-
+    // remove book want to read
     await driver.touchAction({
       action: 'tap',
-      x: 516,
+      x: 549,
       y: 1523
     });
 
+    await driver.pause(2000)
     const lnk_remove = await driver.$('//android.widget.Button[@resource-id="com.goodreads:id/remove_from_my_books"]');
+    // await lnk_remove.waitForExist({ timeout: 5000 });
     await lnk_remove.click();
 
     const btn_remove = await driver.$('//android.widget.Button[@resource-id="android:id/button1"]');
